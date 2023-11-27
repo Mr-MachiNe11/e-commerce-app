@@ -74,8 +74,8 @@ class _HomeState extends State<Home> {
             child: GridView.builder(
                 padding: EdgeInsets.zero,
                 shrinkWrap: true,
+                physics: const NeverScrollableScrollPhysics(),
                 itemCount: topProducts.length,
-                scrollDirection: Axis.vertical,
                 gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
                   mainAxisSpacing: 20,
@@ -111,14 +111,17 @@ class _HomeState extends State<Home> {
                         SizedBox(
                           height: 45,
                           width: 140,
-                          child: OutlinedButton(onPressed: (){
-
-                          },style: OutlinedButton.styleFrom(
-                            side: const BorderSide(color: Colors.red,width: 1.7),
-                          )
-                          , child: const Text('Buy',style: TextStyle(color: Colors.red),)),
-                        )
-
+                          child: OutlinedButton(
+                              onPressed: () {},
+                              style: OutlinedButton.styleFrom(
+                                side: const BorderSide(
+                                    color: Colors.red, width: 1.7),
+                              ),
+                              child: const Text(
+                                'Buy',
+                                style: TextStyle(color: Colors.red),
+                              )),
+                        ),
                       ],
                     ),
                   );
@@ -223,9 +226,9 @@ List<ProductModel> topProducts = [
   ),
   ProductModel(
     id: '8',
-    name: 'Google-Pixel 8 128GB (Unlocked)-Obsidian',
+    name: 'Google-Pixel 8',
     price: '\$699',
-    description: 'High-performance smartphone with advanced features',
+    description: ' 128GB (Unlocked)-Obsidian,High-performance smartphone with advanced features',
     status: 'In Stock',
     isFavourite: false,
     image:
