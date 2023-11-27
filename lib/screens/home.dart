@@ -15,9 +15,9 @@ class _HomeState extends State<Home> {
   Widget build(BuildContext context) {
     return Scaffold(
         body: SingleChildScrollView(
-          child: Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
           Padding(
             padding: const EdgeInsets.all(12.0),
             child: Column(
@@ -72,32 +72,61 @@ class _HomeState extends State<Home> {
           Padding(
             padding: const EdgeInsets.all(12.0),
             child: GridView.builder(
-              shrinkWrap: true,
+                padding: EdgeInsets.zero,
+                shrinkWrap: true,
                 itemCount: topProducts.length,
                 scrollDirection: Axis.vertical,
-                gridDelegate:
-                    const SliverGridDelegateWithFixedCrossAxisCount(crossAxisCount: 2,
-                    mainAxisSpacing: 20,crossAxisSpacing: 20),
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  mainAxisSpacing: 20,
+                  crossAxisSpacing: 20,
+                  childAspectRatio: 0.9,
+                ),
                 itemBuilder: (ctx, index) {
-                final singleProduct = topProducts[index];
-                return Container(
-                  color: Colors.red.withOpacity(0.6),
-                  child: Column(
-                    children: [
-                      Image.network(singleProduct.image,
-                      height: 100,width: 100,),
+                  final singleProduct = topProducts[index];
+                  return Container(
+                    decoration: BoxDecoration(
+                      color: Colors.red.withOpacity(0.3),
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                    child: Column(
+                      children: [
+                        Image.network(
+                          singleProduct.image,
+                          height: 60,
+                          width: 60,
+                        ),
+                        const SizedBox(
+                          height: 12,
+                        ),
+                        Text(
+                          singleProduct.name,
+                          style: const TextStyle(
+                              fontSize: 18, fontWeight: FontWeight.bold),
+                        ),
+                        Text('Price: ${singleProduct.price}'),
+                        const SizedBox(
+                          height: 30,
+                        ),
+                        SizedBox(
+                          height: 45,
+                          width: 140,
+                          child: OutlinedButton(onPressed: (){
 
+                          },style: OutlinedButton.styleFrom(
+                            side: const BorderSide(color: Colors.red,width: 1.7),
+                          )
+                          , child: const Text('Buy',style: TextStyle(color: Colors.red),)),
+                        )
 
-                    ],
-                  ),
-
-                );
-
-                  }),
+                      ],
+                    ),
+                  );
+                }),
           ),
-      ],
-    ),
-        ));
+        ],
+      ),
+    ));
   }
 }
 
@@ -132,7 +161,7 @@ List<ProductModel> topProducts = [
   ),
   ProductModel(
     id: '2',
-    name: 'Fruits Basket with Pink Carnations',
+    name: 'Fruits Basket',
     price: '\$29.99',
     description:
         'Gift online this Memorable Present of 10 Pink Carnations Basket with 2kg Fresh Fruits Basket and 500gm Assorted Dry Fruits and create an extremely joyful moment for your dear ones.',
@@ -142,7 +171,7 @@ List<ProductModel> topProducts = [
   ),
   ProductModel(
     id: '3',
-    name: 'Veg Pizza Combo',
+    name: 'Pizza Combo',
     price: '\$19.99',
     description:
         'Go classy with our Guiltfree pizza combo of  all time favourites - farm fresh veggie and classic paneer pizza along with zero sugar cola ( 2 units ) and a delicious choco nut dates pudding.',
@@ -203,13 +232,13 @@ List<ProductModel> topProducts = [
         'https://pisces.bbystatic.com/image2/BestBuy_US/images/products/6559/6559236_sd.jpg;maxHeight=640;maxWidth=550',
   ),
   ProductModel(
-    id: '9',
-    name: 'Baby Dress',
-    price: '\$39.99',
-    description: "BABY FASHIONABLE DRESS (WHITE & BABY PINK)- 0 TO 3 YEAR'S",
-    status: 'In Stock',
-    isFavourite: false,
-    image: 'https: //www.saffron.com.bd/images/detailed/206/10_ft7z-7w.jpg',
-  ),
+      id: '9',
+      name: 'Baby Dress',
+      price: '\$39.99',
+      description: "BABY FASHIONABLE DRESS - 0 TO 3 YEAR'S",
+      status: 'In Stock',
+      isFavourite: false,
+      image:
+          'https://ng.jumia.is/unsafe/fit-in/680x680/filters:fill(white)/product/51/7304012/1.jpg?1240'),
 // Add more products as needed
 ];
