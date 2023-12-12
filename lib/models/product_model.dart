@@ -4,7 +4,8 @@
 
 import 'dart:convert';
 
-ProductModel productModelFromJson(String str) => ProductModel.fromJson(json.decode(str));
+ProductModel productModelFromJson(String str) =>
+    ProductModel.fromJson(json.decode(str));
 
 String productModelToJson(ProductModel data) => json.encode(data.toJson());
 
@@ -28,22 +29,22 @@ class ProductModel {
   });
 
   factory ProductModel.fromJson(Map<String, dynamic> json) => ProductModel(
-    id: json["id"],
-    name: json["name"],
-    price: json["price"],
-    description: json["description"],
-    status: json["status"],
-    isFavourite: false,
-    image: json["image"],
-  );
+        id: json["id"],
+        name: json["name"] ?? 'yk',
+        price: json["price"],
+        description: json["description"],
+        status: json["status"],
+        isFavourite: false,
+        image: json["image"],
+      );
 
   Map<String, dynamic> toJson() => {
-    "id": id,
-    "name": name,
-    "price": price,
-    "description": description,
-    "status": status,
-    "isFavourite": isFavourite,
-    "image": image,
-  };
+        "id": id,
+        "name": name,
+        "price": price,
+        "description": description,
+        "status": status,
+        "isFavourite": isFavourite,
+        "image": image,
+      };
 }
