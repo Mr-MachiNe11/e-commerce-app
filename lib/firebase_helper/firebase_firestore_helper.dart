@@ -22,7 +22,21 @@ class FirebaseFirestoreHelper {
     }
   }
 
-  /*Future<List<ProductModel>> getTopProductList(String categoryId) async {
+  Future<List<ProductModel>> getTopProductList() async {
+    try {
+      QuerySnapshot<Map<String, dynamic>> querySnapshot =
+          await _firebaseFirestore.collectionGroup("products").get();
+      List<ProductModel> topProductList = querySnapshot.docs
+          .map((e) => ProductModel.fromJson(e.data()))
+          .toList();
+      return topProductList;
+    } catch (e) {
+      showMessage(e.toString());
+      return [];
+    }
+  }
+
+  Future<List<ProductModel>> getCategoryViewProduct(String categoryId) async {
     try {
       QuerySnapshot<Map<String, dynamic>> querySnapshot =
           await _firebaseFirestore
@@ -35,20 +49,6 @@ class FirebaseFirestoreHelper {
           .map((e) => ProductModel.fromJson(e.data()))
           .toList();
 
-      return topProductList;
-    } catch (e) {
-      showMessage(e.toString());
-      return [];
-    }
-  }*/
-
-  Future<List<ProductModel>> getTopProductList() async {
-    try {
-      QuerySnapshot<Map<String, dynamic>> querySnapshot =
-          await _firebaseFirestore.collectionGroup("products").get();
-      List<ProductModel> topProductList = querySnapshot.docs
-          .map((e) => ProductModel.fromJson(e.data()))
-          .toList();
       return topProductList;
     } catch (e) {
       showMessage(e.toString());

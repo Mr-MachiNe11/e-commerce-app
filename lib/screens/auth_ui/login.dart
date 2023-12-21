@@ -5,7 +5,6 @@ import 'package:ecommerce_app/screens/auth_ui/sign_up.dart';
 import 'package:ecommerce_app/screens/home.dart';
 import 'package:ecommerce_app/widgets/primary_button.dart';
 import 'package:ecommerce_app/widgets/top_titles.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 

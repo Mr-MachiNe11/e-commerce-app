@@ -11,6 +11,7 @@ class Routes {
   }
 
   Future<dynamic> push(Widget widget, BuildContext context) {
+    print("Pushing widget: $widget");
     return Navigator.of(context)
         .push(MaterialPageRoute(builder: (context) => widget));
   }

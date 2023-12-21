@@ -1,5 +1,11 @@
+import 'package:ecommerce_app/constants/constants.dart';
+import 'package:ecommerce_app/constants/routes.dart';
 import 'package:ecommerce_app/models/product_model.dart';
+import 'package:ecommerce_app/provider/app_provider.dart';
+import 'package:ecommerce_app/screens/cart.dart';
+import 'package:ecommerce_app/screens/favourite_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 class ProductDetails extends StatefulWidget {
   final ProductModel singleProduct;
@@ -15,58 +21,79 @@ class _ProductDetailsState extends State<ProductDetails> {
 
   @override
   Widget build(BuildContext context) {
+    AppProvider appProvider = Provider.of<AppProvider>(context);
+
     return Scaffold(
       appBar: AppBar(
         actions: [
           IconButton(
-              onPressed: () {}, icon: const Icon(Icons.shopping_cart_outlined)),
+            onPressed: () {
+              Routes.instance.push(const Cart(), context);
+            },
+            icon: const Icon(Icons.shopping_cart_outlined),
+          ),
         ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(12.0),
         child: Column(
+          //crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            Image.network(widget.singleProduct.image),
+            SizedBox(
+              height: 400,
+              width: 400,
+              child: Image.network(widget.singleProduct.image),
+            ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 Text(
                   widget.singleProduct.name,
                   style: const TextStyle(
-                      fontWeight: FontWeight.bold, fontSize: 18),
+                    fontWeight: FontWeight.bold,
+                    fontSize: 18,
+                  ),
                 ),
                 IconButton(
-                    onPressed: () {
-                      setState(() {
-                        widget.singleProduct.isFavourite =
-                            !widget.singleProduct.isFavourite;
-                      });
-                    },
-                    icon: Icon(widget.singleProduct.isFavourite
+                  onPressed: () {
+                    setState(() {
+                      widget.singleProduct.isFavourite =
+                          !widget.singleProduct.isFavourite;
+                    });
+                    if (widget.singleProduct.isFavourite) {
+                      appProvider.addFavouriteProduct(widget.singleProduct);
+                    } else {
+                      appProvider.removeFavouriteProduct(widget.singleProduct);
+                    }
+                  },
+                  icon: Icon(
+                    appProvider
+                            .getFavouriteProductList()
+                            .contains(widget.singleProduct)
                         ? Icons.favorite
-                        : Icons.favorite_border_sharp)),
+                        : Icons.favorite_border_sharp,
+                  ),
+                ),
               ],
             ),
             Text(widget.singleProduct.description),
-            const SizedBox(
-              height: 16,
-            ),
+            const SizedBox(height: 16),
             Row(
               children: [
-                ElevatedButton(
-                  onPressed: () {
+                InkWell(
+                  onTap: () {
                     if (qty >= 1) {
                       setState(() {
                         qty--;
                       });
-                      //print('Decreasing quantity: $qty');
                     }
                   },
-                  child: const Icon(Icons.remove),
+                  child: const CircleAvatar(
+                    backgroundColor: Colors.red,
+                    child: Icon(Icons.remove, color: Colors.white),
+                  ),
                 ),
-                const SizedBox(
-                  width: 12,
-                ),
+                const SizedBox(width: 12),
                 Text(
                   qty.toString(),
                   style: const TextStyle(
@@ -74,21 +101,20 @@ class _ProductDetailsState extends State<ProductDetails> {
                     fontWeight: FontWeight.bold,
                   ),
                 ),
-                const SizedBox(
-                  width: 12,
-                ),
-                ElevatedButton(
-                  onPressed: () {
+                const SizedBox(width: 12),
+                InkWell(
+                  onTap: () {
                     setState(() {
                       qty++;
                     });
-                    //print('Increasing quantity: $qty');
                   },
-                  child: const Icon(Icons.add),
+                  child: const CircleAvatar(
+                    backgroundColor: Colors.red,
+                    child: Icon(Icons.add, color: Colors.white),
+                  ),
                 ),
               ],
             ),
-
             const Spacer(),
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -99,7 +125,12 @@ class _ProductDetailsState extends State<ProductDetails> {
                       const BorderSide(color: Colors.red),
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    ProductModel productModel =
+                        widget.singleProduct.copyWith(qty: qty);
+                    appProvider.addCartProduct(productModel);
+                    showMessage('Added to Cart');
+                  },
                   child: const Text(
                     'ADD TO CART',
                     style: TextStyle(
@@ -107,15 +138,24 @@ class _ProductDetailsState extends State<ProductDetails> {
                     ),
                   ),
                 ),
+                const SizedBox(width: 6),
                 SizedBox(
                   width: 130,
                   child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Routes.instance.push(
+                        const FavouriteScreen(),
+                        context,
+                      );
+                    },
                     child: const Text('BUY'),
                   ),
                 ),
               ],
             ),
+            const SizedBox(
+              height: 50,
+            )
           ],
         ),
       ),
