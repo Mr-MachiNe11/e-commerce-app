@@ -36,4 +36,8 @@ class FirebaseAuthHelper {
     }
   }
 
+  void signOut() async{
+    _auth.signOut();
+  }
+
 }

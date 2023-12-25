@@ -1,3 +1,4 @@
+import 'package:ecommerce_app/firebase_helper/firebase_auth_helper.dart';
 import 'package:ecommerce_app/widgets/top_titles.dart';
 import 'package:flutter/material.dart';
 
@@ -112,7 +113,12 @@ class _HomeState extends State<Home> {
                           height: 45,
                           width: 140,
                           child: OutlinedButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                FirebaseAuthHelper.instance.signOut();
+                                setState(() {
+
+                                });
+                              },
                               style: OutlinedButton.styleFrom(
                                 side: const BorderSide(
                                     color: Colors.red, width: 1.7),
