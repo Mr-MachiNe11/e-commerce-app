@@ -1,6 +1,12 @@
 import 'package:flutter/material.dart';
 
 ThemeData themeData = ThemeData(
+  primarySwatch: Colors.red,
+  /*appBarTheme: const AppBarTheme(
+    backgroundColor: Colors.red,
+    elevation: 0.0,
+    iconTheme: IconThemeData(color: Colors.black),
+  ),*/
   scaffoldBackgroundColor: Colors.white,
   inputDecorationTheme: InputDecorationTheme(
     border: outlineInputBorder,

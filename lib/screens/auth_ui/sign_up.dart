@@ -1,5 +1,5 @@
 import 'package:ecommerce_app/constants/routes.dart';
-import 'package:ecommerce_app/screens/home.dart';
+import 'package:ecommerce_app/widgets/bottom_bar.dart';
 import 'package:ecommerce_app/widgets/primary_button.dart';
 import 'package:ecommerce_app/widgets/top_titles.dart';
 import 'package:flutter/material.dart';
@@ -37,6 +37,7 @@ class _SignUpState extends State<SignUp> {
                 height: 48,
               ),
               TextFormField(
+                keyboardType: TextInputType.text,
                 controller: nameController,
                 decoration: const InputDecoration(
                   hintText: 'Name',
@@ -69,9 +70,9 @@ class _SignUpState extends State<SignUp> {
                 height: 12,
               ),
               TextFormField(
+                keyboardType: TextInputType.visiblePassword,
                 controller: passwordController,
                 obscureText: isShowPassword,
-                keyboardType: const TextInputType.numberWithOptions(),
                 decoration: InputDecoration(
                     hintText: 'Password',
                     prefixIcon: const Icon(Icons.password_sharp),
@@ -100,12 +101,13 @@ class _SignUpState extends State<SignUp> {
                         phoneController.text.toString());
                     if (isValidated) {
                       bool isLogined = await FirebaseAuthHelper.instance.signUp(
+                          nameController.text.toString(),
                           emailController.text.toString(),
                           passwordController.text.toString(),
                           context);
                       if (isLogined) {
                         Routes.instance
-                            .pushAndRemoveUntil(const Home(), context);
+                            .pushAndRemoveUntil(const BottomBar(), context);
                       }
                     }
                   }),

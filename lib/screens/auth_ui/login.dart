@@ -2,7 +2,7 @@ import 'package:ecommerce_app/constants/constants.dart';
 import 'package:ecommerce_app/constants/routes.dart';
 import 'package:ecommerce_app/firebase_helper/firebase_auth_helper.dart';
 import 'package:ecommerce_app/screens/auth_ui/sign_up.dart';
-import 'package:ecommerce_app/screens/home.dart';
+import 'package:ecommerce_app/widgets/bottom_bar.dart';
 import 'package:ecommerce_app/widgets/primary_button.dart';
 import 'package:ecommerce_app/widgets/top_titles.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -21,6 +21,7 @@ class _LoginState extends State<Login> {
   final passwordController = TextEditingController();
   bool isShowPassword = true;
   bool loading = false;
+
   //final _formKey = GlobalKey<FormState>();
   //final _auth = FirebaseAuth.instance;
 
@@ -46,11 +47,11 @@ class _LoginState extends State<Login> {
       setState(() {
         loading = false;
       });
-      *//*Navigator.push(
+      */ /*Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) => const PostScreen(),
-          ));*//*
+          ));*/ /*
     }).onError((error, stackTrace) {
       showMessage(error.toString());
       setState(() {
@@ -75,11 +76,13 @@ class _LoginState extends State<Login> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 const TopTitles(
-                    title: 'Login', subtitle: 'Welcome back to our E-commerce App'),
+                    title: 'Login',
+                    subtitle: 'Welcome back to our E-commerce App'),
                 const SizedBox(
                   height: 48,
                 ),
                 TextFormField(
+                  keyboardType: TextInputType.emailAddress,
                   controller: emailController,
                   decoration: const InputDecoration(
                     hintText: 'E-mail',
@@ -90,6 +93,7 @@ class _LoginState extends State<Login> {
                   height: 12,
                 ),
                 TextFormField(
+                  keyboardType: TextInputType.visiblePassword,
                   controller: passwordController,
                   obscureText: isShowPassword,
                   decoration: InputDecoration(
@@ -111,20 +115,21 @@ class _LoginState extends State<Login> {
                   height: 36,
                 ),
                 PrimaryButton(
-
-                  title: 'Login',
+                    title: 'Login',
                     onPressed: () async {
                       bool isValidated = loginValidation(
-                          emailController.text.toString(), passwordController.text.toString());
+                          emailController.text.toString(),
+                          passwordController.text.toString());
                       if (isValidated) {
-                        bool isLogined = await FirebaseAuthHelper.instance.login(
-                            emailController.text.toString(), passwordController.text.toString(), context);
+                        bool isLogined = await FirebaseAuthHelper.instance
+                            .login(emailController.text.toString(),
+                                passwordController.text.toString(), context);
                         if (isLogined) {
-                          Routes.instance.pushAndRemoveUntil(const Home(), context);
+                          Routes.instance
+                              .pushAndRemoveUntil(const BottomBar(), context);
                         }
                       }
-                    }
-                ),
+                    }),
                 const SizedBox(
                   height: 24,
                 ),
@@ -147,5 +152,3 @@ class _LoginState extends State<Login> {
     );
   }
 }
-
-
