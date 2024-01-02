@@ -1,5 +1,7 @@
+import 'package:ecommerce_app/constants/routes.dart';
 import 'package:ecommerce_app/firebase_helper/firebase_auth_helper.dart';
 import 'package:ecommerce_app/provider/app_provider.dart';
+import 'package:ecommerce_app/screens/edit_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -57,7 +59,9 @@ class _AccountScreenState extends State<AccountScreen> {
                 //height: 45,
                 width: 130,
                 child: ElevatedButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Routes.instance.push(const EditProfile(), context);
+                    },
                     style: const ButtonStyle(
                         backgroundColor: MaterialStatePropertyAll(Colors.red)),
                     child: const Text('Edit Profile')),
