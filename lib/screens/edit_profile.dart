@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:ecommerce_app/firebase_helper/firebase_firestore_helper.dart';
+import 'package:ecommerce_app/firebase_helper/firebase_storage_helper.dart';
 import 'package:ecommerce_app/provider/app_provider.dart';
 import 'package:ecommerce_app/widgets/primary_button.dart';
 import 'package:flutter/cupertino.dart';
@@ -35,18 +37,27 @@ class _EditProfileState extends State<EditProfile> {
         title: const Text('Profile', style: TextStyle(color: Colors.black)),
       ),
       body: ListView(
-        padding: EdgeInsets.symmetric(horizontal: 20),
+        padding: const EdgeInsets.symmetric(horizontal: 20),
         children: [
-          CupertinoButton(
-            onPressed: () {
-              takePicture();
-            },
-            child: CircleAvatar(
-              radius: 70,
-              child:
-                  image == null ? const Icon(Icons.camera_alt) : Image.file(image!),
-            ),
-          ),
+          image == null
+              ? CupertinoButton(
+                  onPressed: () {
+                    takePicture();
+                  },
+                  child: const CircleAvatar(
+                    radius: 70,
+                    child: Icon(Icons.camera_alt),
+                  ),
+                )
+              : CupertinoButton(
+                  onPressed: () {
+                    takePicture();
+                  },
+                  child: CircleAvatar(
+                    radius: 70,
+                    backgroundImage: FileImage(image!),
+                  ),
+                ),
           const SizedBox(
             height: 12,
           ),
@@ -60,7 +71,11 @@ class _EditProfileState extends State<EditProfile> {
           ),
           PrimaryButton(
             title: "Update",
-            onPressed: () {},
+            onPressed: ()  {
+              /*String imageUrl =
+                  await FirebaseStorageHelper.instance.uploadUserImage(image!);
+              print(imageUrl);*/
+            },
           )
         ],
       ),
