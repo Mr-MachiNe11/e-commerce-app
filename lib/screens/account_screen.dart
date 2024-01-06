@@ -1,6 +1,7 @@
 import 'package:ecommerce_app/constants/routes.dart';
 import 'package:ecommerce_app/firebase_helper/firebase_auth_helper.dart';
 import 'package:ecommerce_app/provider/app_provider.dart';
+import 'package:ecommerce_app/screens/change_password.dart';
 import 'package:ecommerce_app/screens/edit_profile.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -13,7 +14,6 @@ class AccountScreen extends StatefulWidget {
 }
 
 class _AccountScreenState extends State<AccountScreen> {
-
   @override
   Widget build(BuildContext context) {
     AppProvider appProvider = Provider.of<AppProvider>(
@@ -40,7 +40,11 @@ class _AccountScreenState extends State<AccountScreen> {
                       Icons.person_outline,
                       size: 150,
                     )
-                  : Image.network(appProvider.getUserInfo.image!),
+                  : CircleAvatar(
+                      radius: 70,
+                      backgroundImage:
+                          NetworkImage(appProvider.getUserInfo.image!),
+                    ),
               Text(
                 appProvider.getUserInfo.name,
                 style:
@@ -91,6 +95,13 @@ class _AccountScreenState extends State<AccountScreen> {
                     onTap: () {},
                     leading: const Icon(Icons.support),
                     title: const Text('Support'),
+                  ),
+                  ListTile(
+                    onTap: () {
+                      Routes.instance.push(const ChangePassword(), context);
+                    },
+                    leading: const Icon(Icons.refresh_outlined),
+                    title: const Text('Change Password'),
                   ),
                   ListTile(
                     onTap: () {

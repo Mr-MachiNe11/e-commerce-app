@@ -17,7 +17,9 @@ void main() async {
         apiKey: 'AIzaSyBXa_Iz6tAunPt8Ll3uMWv1NJYy43ZMpOk',
         appId: '1:875000428969:android:e10aafb775b187afa8ecb8',
         messagingSenderId: '875000428969',
-        projectId: 'e-commerce-58a4c'),
+        projectId: 'e-commerce-58a4c',
+      storageBucket: 'e-commerce-58a4c.appspot.com'
+    ),
   )
       : await Firebase.initializeApp();
 

@@ -1,6 +1,8 @@
 import 'dart:io';
+import 'package:ecommerce_app/constants/constants.dart';
 import 'package:ecommerce_app/firebase_helper/firebase_firestore_helper.dart';
 import 'package:ecommerce_app/firebase_helper/firebase_storage_helper.dart';
+import 'package:ecommerce_app/models/user_model.dart';
 import 'package:ecommerce_app/provider/app_provider.dart';
 import 'package:ecommerce_app/widgets/primary_button.dart';
 import 'package:flutter/cupertino.dart';
@@ -20,12 +22,15 @@ class _EditProfileState extends State<EditProfile> {
 
   void takePicture() async {
     XFile? value = await ImagePicker().pickImage(source: ImageSource.gallery);
+    print('${value?.path}');
     if (value != null) {
       setState(() {
         image = File(value.path);
       });
     }
   }
+
+  final nameController = TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -62,6 +67,7 @@ class _EditProfileState extends State<EditProfile> {
             height: 12,
           ),
           TextFormField(
+            controller: nameController,
             decoration: InputDecoration(
               hintText: appProvider.getUserInfo.name,
             ),
@@ -71,10 +77,9 @@ class _EditProfileState extends State<EditProfile> {
           ),
           PrimaryButton(
             title: "Update",
-            onPressed: ()  {
-              /*String imageUrl =
-                  await FirebaseStorageHelper.instance.uploadUserImage(image!);
-              print(imageUrl);*/
+            onPressed: () async {
+              UserModel userModel = appProvider.getUserInfo.copyWith(name: nameController.text);
+              appProvider.updateUserInfoFirebase(context, userModel, image);
             },
           )
         ],
